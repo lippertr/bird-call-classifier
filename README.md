@@ -6,6 +6,8 @@ A project to classify birds by their songs and calls
 ## Table of Contents
 TODO once all contents entered
 
+[Schedule](#schedule)
+
 ## Data Sources
 http://www.xeno-canto.org/
 https://www.mbr-pwrc.usgs.gov/id/calllist.html
