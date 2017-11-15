@@ -49,9 +49,9 @@ What I would do if I had more time
 | Task        | Status           | Priority  | Time Used | Total Time
 | -------------:|:-------------:| -----:|-----:|-----:|
 | Gather Data               | **In Progress** | MVP     | 10 |20 |
+| Munge Data                | **In Progress** | MVP     | 2 | 30 |
 | Submit Proposal / README  | In Progress     | MVP     | 2 | 3 |
 | Create ML Architecture    | **In Progress** | MVP     | 4 | 4 |
-| Munge Data                | **In Progress** | MVP     | 2 | 30 |
 | Architect DB schema       | Not Started     | Optional| 0 | 4 |
 | Create DB                 | Not Started     | Optional| 0 | 4 |
 | Min CNN working with output | Not Started   | MVP     | 0 |8 |

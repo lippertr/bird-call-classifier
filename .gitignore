@@ -1,3 +1,4 @@
 *.mp3
 TODO.txt
 *.swp
+./data/*
