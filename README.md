@@ -48,8 +48,8 @@ What I would do if I had more time
 ## Schedule
 | Task        | Status           | Priority  | Time Used | Total Time
 | -------------:|:-------------:| -----:|-----:|-----:|
-| Gather Data               | **In Progress** | MVP     | 10 |20 |
-| Munge Data                | **In Progress** | MVP     | 2 | 30 |
+| Gather Data               | **In Progress** | MVP     | 18 |20 |
+| Munge Data                | **In Progress** | MVP     | 6 | 30 |
 | Submit Proposal / README  | In Progress     | MVP     | 2 | 3 |
 | Create ML Architecture    | **In Progress** | MVP     | 4 | 4 |
 | Architect DB schema       | Not Started     | Optional| 0 | 4 |
@@ -64,7 +64,7 @@ What I would do if I had more time
 | Meetings                  | Ongoing         | MVP     | 1 | 25 |
 | Review other Projects     | Complete        | Optional| 4  |4  |
 | Create Git Repo           | Complete        | MVP     | 0 | 0.5 |
-|                           |                 | Totals: | x |  176 (remaining not all tasked)|
+|                           |                 | Totals: | x |  152 (remaining not all tasked)|
 
 
 ## Acknowledgements
