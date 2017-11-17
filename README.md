@@ -48,11 +48,10 @@ What I would do if I had more time
 ## Schedule
 | Task        | Status           | Priority  | Time Used | Total Time
 | -------------:|:-------------:| -----:|-----:|-----:|
-| Gather Data               | **In Progress** | MVP     | 18  |20 |
-| Munge Data                | **In Progress** | MVP     | 6   | 30 |
-| s3 bucket for data        | **In Progress** | MVP     | 0.5 | 3 |
+| Munge Data                | **In Progress** | MVP     | 10   | 30 |
+| pyAudioAnalysis           | **In Progress** | MVP     | 4   | 3 |
+| Create ML Architecture    | **In Progress** | MVP     | 6   | 4 |
 | Submit Proposal / README  | In Progress     | MVP     | 2   | 3 |
-| Create ML Architecture    | **In Progress** | MVP     | 4   | 4 |
 | Architect DB schema       | Not Started     | Optional| 0   | 4 |
 | Create DB                 | Not Started     | Optional| 0   | 4 |
 | Min CNN working with output | Not Started   | MVP     | 0   |8 |
@@ -62,9 +61,12 @@ What I would do if I had more time
 | Finish Project Schedule   | In Progress     | MVP     | 10  | 4 |
 | Update Project Schedule   | In Progress     | MVP     | 10  |5 |
 | Output visualizations     | Not Started     | Optional| 0   | 3 |
-| Meetings                  | Ongoing         | MVP     | 1   | 25 |
+| Meetings                  | Ongoing         | MVP     | 3   | 25 |
+|-------------------        |----------       |-----    |--   |--|
 | Review other Projects     | Complete        | Optional| 4   |4  |
-| Create Git Repo           | Complete        | MVP     | 0   | 0.5 |
+| Create Git Repo           | Complete        | MVP     | 0.5  | 0.5 |
+| Gather Data               | Complete        | MVP     | 22  |20 |
+| s3 bucket for data        | Complete        | MVP     | 1 | 1 |
 |                           |                 | Totals: | x   |  152 (remaining not all tasked)|
 
 
