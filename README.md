@@ -48,26 +48,29 @@ What I would do if I had more time
 ## Schedule
 | Task        | Status           | Priority  | Time Used | Total Time
 | -------------:|:-------------:| -----:|-----:|-----:|
-| Munge Data                | **In Progress** | MVP     | 10   | 30 |
-| pyAudioAnalysis           | **In Progress** | MVP     | 4   | 3 |
-| Create ML Architecture    | **In Progress** | MVP     | 6   | 4 |
-| Submit Proposal / README  | In Progress     | MVP     | 2   | 3 |
+| Munge Data                | **In Progress** | MVP     | 18   | 30 |
+| Create ML Architecture    | **In Progress** | MVP     | 7   | 4 |
+| Min CNN working w/ output | Not Started   | MVP     | 0   |8 |
 | Architect DB schema       | Not Started     | Optional| 0   | 4 |
 | Create DB                 | Not Started     | Optional| 0   | 4 |
-| Min CNN working with output | Not Started   | MVP     | 0   |8 |
 | Train Model               | Not Started     | MVP     | 0   |40 |
 | Create Presentation       | Not Started     | MVP     | 0   |8 |
 | Update Documentation      | In Progress     | MVP     | 10  |6 |
 | Finish Project Schedule   | In Progress     | MVP     | 10  | 4 |
-| Update Project Schedule   | In Progress     | MVP     | 10  |5 |
+| Update Project Schedule   | In Progress     | MVP     | 6  |5 |
 | Output visualizations     | Not Started     | Optional| 0   | 3 |
-| Meetings                  | Ongoing         | MVP     | 3   | 25 |
+| Meetings                  | Ongoing         | MVP     | 4   | 25 |
 |-------------------        |----------       |-----    |--   |--|
+| librosa                   | Complete        | MVP     | 9   | 3 |
+| yaafe                     | Complete        | MVP     | 8   | 3 |
+| pyAudioAnalysis           | Complete        | MVP     | 4   | 3 |
+| abio                      | Complete        | MVP     | 4   | 3 |
 | Review other Projects     | Complete        | Optional| 4   |4  |
 | Create Git Repo           | Complete        | MVP     | 0.5 | 0.5 |
 | Gather Data               | Complete        | MVP     | 22  |20 |
 | s3 bucket for data        | Complete        | MVP     | 1 | 1 |
-|                           |                 | Totals: | x   |  128 (remaining not all tasked)|
+| Submit Proposal           | Complete        | MVP     | 2   | 3 |
+|                           |                 | Totals: | x   |  100 (remaining not all tasked)|
 
 
 ## Acknowledgements
