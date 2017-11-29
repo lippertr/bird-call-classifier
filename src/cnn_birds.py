@@ -146,12 +146,12 @@ class model_sonograms():
 
         return None
 
-    def save(save_name, weights=True, model=True):
+    def save(self, save_name, weights=True, hdf5_model=True):
         #saving weights and model both just to be pedantic
-        weight_file = save_name + t_stamp + '.weights'
+        weight_file = save_name + self._t_stamp + '.weights'
         self.model.save_weights(weight_file)
 
-        model_file = save_name + t_stamp + '_model.hdf5'
+        model_file = save_name + self._t_stamp + '_model.hdf5'
         self.model.save(model_file)
 
         '''
@@ -166,16 +166,19 @@ class model_sonograms():
         weight output files
         """
         from datetime import datetime
-        t_stamp = datetime.now()
-        t_stamp = str(t_stamp)
-        t_stamp = t_stamp.replace('-','')
-        t_stamp = t_stamp.replace(' ', '')
-        t_stamp = t_stamp.replace(':', '')
+        self._t_stamp = datetime.now()
+        self._t_stamp = str(self._t_stamp)
+        self._t_stamp = self._t_stamp.replace('-','')
+        self._t_stamp = self._t_stamp.replace(' ', '')
+        self._t_stamp = self._t_stamp.replace(':', '')
 
         #don't need fractional seconds for this
-        return t_stamp.split('.')[0]
+        return self._t_stamp.split('.')[0]
 
     def predict_item(self, image_filename):
+        """
+        takes one input image and returns the class label
+        """
 
         return
 
@@ -191,10 +194,10 @@ if __name__ == '__main__':
     save_name_prefix = 'imgdata_33k_big2dcnn_stft'
     tensorbd = TensorBoard('logs/' + save_name_prefix)
 
-    bird_model.make_model()
-    bird_model.fit(epochs=1) #refactor code testing replace with appropriate num later
+    # bird_model.fit(epochs=100)
+    bird_model.fit(steps_per_epoch=2, epochs=1)
 
-    bird_model.save(save_name_prefix, weights=True, hdf5=True)
+    bird_model.save(save_name_prefix, weights=True, hdf5_model=True)
 
     #make predictions
     # for all of validation set
