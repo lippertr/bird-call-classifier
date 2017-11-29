@@ -67,12 +67,12 @@ What I found
 What I would do if I had more time
 
 ## Schedule
-| Task        | Status           | Priority  | Time Used | Total Time
 
 - [x] Move code to meaningful filename
 - [x] Create utility class for extra helper functions
 - [ ] Update Readme.md
 - [ ] Place sample data into data/ image_data/ html/ directories
+- [ ] Create Presentation
 
 
 ## Acknowledgements

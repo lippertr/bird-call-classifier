@@ -17,137 +17,187 @@ from keras import regularizers
 """
 The model class for a convelutional neural network using keras
 """
+class model_sonograms():
+    def __init__(self, input_data_path='./', xpixels=138, ypixels=138):
+        self.xpixels = xpixels
+        self.ypixels = ypixels
+        self.input_data_path = input_data_path
+        self.X_test_gen = None
+        self.X_train_gen = None
+        self._t_stamp = self._get_time_str()
+        self.model = None
 
-xpixels = 138
-ypixels = 138
+        return
 
-def bird_model(num_classes):
+    def load_samples(self, rescale=1./255):
+        """
+        Loads the sample data test and validation into keras ImageDataGenerators
+        Input: input_data_dir - the director where the sample image files are located
+               The directory structur must adhere to the ImageDataGenerator rules see
+               Keras documentation for details since at this time the structure is handy
+               but completely inflexible.
+               Basic structure:
+               input_data_dir/
+                            ├── train
+                            │   ├── label1
+                            │   │   ├── image_file_1
+                            │   │   └── image_file_N
+                            │   ├── label2
+                            │   │   ├── image_file_1
+                            │   │   └── image_file_N
+                            │   └── label3
+                            │       ├── image_file_1
+                            │       └── image_file_N
+                            └── validation
+                                    ├── label1
+                                    │   ├── image_file_1
+                                    │   └── image_file_N
+                                    ├── label2
+                                    │   ├── image_file_1
+                                    │   └── image_file_N
+                                    └── label3
+                                        ├── image_file_1
+                                        └── image_file_N
+        Return: Training image generator, Test image generator
+        """
+        train_datagen = ImageDataGenerator(rescale=1./255)
+        train_validation_datagen = ImageDataGenerator(rescale=1./255)
+        self.X_train_gen = train_datagen.flow_from_directory(self.input_data_path + 'train/',
+                        class_mode='categorical',
+                        target_size=(self.xpixels,self.ypixels),
+                        color_mode='grayscale',
+                        shuffle=True)
+        self.X_test_gen = train_validation_datagen.flow_from_directory(self.input_data_path + 'validation/',
+                        class_mode='categorical',
+                        target_size=(self.xpixels,self.ypixels),
+                        color_mode='grayscale',
+                        shuffle=True)
 
+        return self.X_train_gen, self.X_test_gen
 
-        model = Sequential()
+    def make_model(self):
+        """
+        Makes the model
+        Input: the number of classes in the samples that will be used for training/validation
+        Return: the model
+        """
+        self.model = Sequential()
         #input layer
-        model.add(Conv2D(32, kernel_size=(3, 3), input_shape=(xpixels, ypixels, 1)))
-        model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
+        self.model.add(Conv2D(32, kernel_size=(3, 3), input_shape=(self.xpixels, self.ypixels, 1)))
+        self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
 
         #hidden layers
-        model.add(Conv2D(64, kernel_size=(3, 3)))
-        model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(Dropout(0.25))
+        self.model.add(Conv2D(64, kernel_size=(3, 3)))
+        self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
+        self.model.add(MaxPooling2D(pool_size=(2, 2)))
+        self.model.add(Dropout(0.25))
 
-        model.add(Conv2D(128, kernel_size=(3, 3)))
-        model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(Dropout(0.25))
+        self.model.add(Conv2D(128, kernel_size=(3, 3)))
+        self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
+        self.model.add(MaxPooling2D(pool_size=(2, 2)))
+        self.model.add(Dropout(0.25))
 
-        model.add(Conv2D(128, kernel_size=(3, 3)))
-        model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(BatchNormalization())
-        model.add(Dropout(0.25))
-        
-        model.add(Conv2D(128, kernel_size=(3, 3)))
-        model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(BatchNormalization())
-        model.add(Dropout(0.25))
+        self.model.add(Conv2D(128, kernel_size=(3, 3)))
+        self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
+        self.model.add(MaxPooling2D(pool_size=(2, 2)))
+        self.model.add(BatchNormalization())
+        self.model.add(Dropout(0.25))
 
-        model.add(Conv2D(128, kernel_size=(3, 3)))
-        model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(BatchNormalization())
-        model.add(Dropout(0.25))
+        self.model.add(Conv2D(128, kernel_size=(3, 3)))
+        self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
+        self.model.add(MaxPooling2D(pool_size=(2, 2)))
+        self.model.add(BatchNormalization())
+        self.model.add(Dropout(0.25))
+
+        self.model.add(Conv2D(128, kernel_size=(3, 3)))
+        self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
+        self.model.add(MaxPooling2D(pool_size=(2, 2)))
+        self.model.add(BatchNormalization())
+        self.model.add(Dropout(0.25))
 
         #MLP
-        model.add(Flatten())
-        model.add(Dense(128))
-        model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
-        model.add(Dropout(0.5))
+        self.model.add(Flatten())
+        self.model.add(Dense(128))
+        self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
+        self.model.add(Dropout(0.5))
 
         #output layer
-        model.add(Dense(num_classes))
-        model.add(Activation('softmax'))
+        self.model.add(Dense(self.X_test_gen.num_class)) #could also use X_test_gen num_classes are equal
+        self.model.add(Activation('softmax'))
 
+        self.model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-        return model
+        return self.model
+
+    def fit(self, steps_per_epoch=5, epochs=20):
+        """
+        Uses the fit_generator method to fit the model to the loaded input images
+        """
+        self.model.fit_generator(
+            self.X_train_gen,
+            verbose=1,
+            steps_per_epoch=steps_per_epoch, #300 should typically be equal to the number of unique samples of your dataset divided by the batch size
+            epochs=epochs,  #50,
+            callbacks=[tensorbd],
+            validation_data=self.X_test_gen,
+            validation_steps=100) # validation_steps should be equal to
+                                 # the number of unique samples of your
+                                 # VALIDATION dataset divided by the batch size.
+
+        return None
+
+    def save(self, save_name, weights=True, hdf5_model=True):
+        #saving weights and model both just to be pedantic
+        weight_file = save_name + self._t_stamp + '.weights'
+        self.model.save_weights(weight_file)
+
+        model_file = save_name + self._t_stamp + '_model.hdf5'
+        self.model.save(model_file)
+
+        '''
+        need a load:
+        model.load_weights(filepath, by_name=False)
+        '''
+        return None
+
+    def _get_time_str(self):
+        """
+        Utility function to return timestamp string to append to log and
+        weight output files
+        """
+        from datetime import datetime
+        self._t_stamp = datetime.now()
+        self._t_stamp = str(self._t_stamp)
+        self._t_stamp = self._t_stamp.replace('-','')
+        self._t_stamp = self._t_stamp.replace(' ', '')
+        self._t_stamp = self._t_stamp.replace(':', '')
+
+        #don't need fractional seconds for this
+        return self._t_stamp.split('.')[0]
+
+    def predict_item(self, image_filename):
+        """
+        takes one input image and returns the class label
+        """
+
+        return
+
 
 if __name__ == '__main__':
 
-    '''
-    creat function to read all the files from the input directory
-    create % train test split
-    process features as decided
-    output images to directories for imagedatagenerator to use
-    '''
-    #get input genorator to images
-    train_datagen = ImageDataGenerator(rescale=1./255)
-    train_validation_datagen = ImageDataGenerator(rescale=1./255)
-    X_train_gen = train_datagen.flow_from_directory('img_data/train',
-                    class_mode='categorical',
-                    target_size=(xpixels,ypixels),
-                    color_mode='grayscale',
-                    shuffle=True)
-    X_test_gen = train_validation_datagen.flow_from_directory('img_data/validation/',
-                    class_mode='categorical',
-                    target_size=(xpixels,ypixels),
-                    color_mode='grayscale',
-                    shuffle=True)
-
-    model = bird_model(X_train_gen.num_class)
-
-    #make timestamp extention to save model weights and config
-    from datetime import datetime
-    t_stamp = datetime.now()
-    t_stamp = str(t_stamp)
-    t_stamp = t_stamp.replace('-','')
-    t_stamp = t_stamp.replace(' ', '')
-    t_stamp = t_stamp.replace(':', '')
-    #don't need fractional seconds for this
-    t_stamp = t_stamp.split('.')[0]
+    input_image_path = '../data/xeno-canto/img_data/'
+    bird_model = model_sonograms(input_data_path=input_image_path)
+    bird_model.load_samples()
+    bird_model.make_model()
 
     #use tensorboard to see output and tweak
-    data_run_name = 'imgdata_33k_big2dcnn_stft'+t_stamp
-    tensorbd = TensorBoard('logs/' + data_run_name)
+    save_name_prefix = 'imgdata_33k_big2dcnn_stft'
+    tensorbd = TensorBoard('logs/' + save_name_prefix)
 
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    # bird_model.fit(epochs=100)
+    bird_model.fit(steps_per_epoch=2, epochs=1)
 
-    model.fit_generator(
-        X_train_gen,
-        verbose=1,
-        steps_per_epoch=300, #300 should typically be equal to the number of unique samples of your dataset divided by the batch size
-        epochs=60,  #50,
-        callbacks=[tensorbd],
-        validation_data=X_test_gen,
-        validation_steps=100) # validation_steps should be equal to
-                             # the number of unique samples of your
-                             # VALIDATION dataset divided by the batch size.
-
-    #make timestamp extention to save model weights and config
-    from datetime import datetime
-    t_stamp = datetime.now()
-    t_stamp = str(t_stamp)
-    t_stamp = t_stamp.replace('-','')
-    t_stamp = t_stamp.replace(' ', '')
-    t_stamp = t_stamp.replace(':', '')
-    #don't need fractional seconds for this
-    t_stamp = t_stamp.split('.')[0]
-
-    #saving weights and model both just to be pedantic
-    weight_file = data_run_name + t_stamp + '.weights'
-    model.save_weights(weight_file)
-
-    model_file = data_run_name + t_stamp + '_model.hdf5'
-    model.save(model_file)
-
-    '''
-    FYI:
-    model.save_weights(filepath): saves the weights of the model as a HDF5 file.
-    model.load_weights(filepath, by_name=False): loads the weights of the model
-    from a HDF5 file (created by  save_weights). By default, the architecture is
-    expected to be unchanged. To load weights into a different
-    architecture (with some layers in common), use by_name=True to load only
-    those layers with the same name.
-    '''
+    bird_model.save(save_name_prefix, weights=True, hdf5_model=True)
 
     #make predictions
     # for all of validation set
