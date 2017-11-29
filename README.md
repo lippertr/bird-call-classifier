@@ -1,7 +1,12 @@
 ** This is a work in progress for a class **
 
-# bird-call-classifier
-A project to classify birds by their songs and calls
+# Bird Classifier by Call or Song
+
+It's widely agreed there are between 9,000-10,000 bird species. Some sources double that number (sources).
+
+When outdoors a person is more likely to hear a bird than see it. This results in difficulty identifying bird species in rural and urban centers alike. If the sound can be used to classify a bird species, researchers to hobbyists can have a better idea of what species are present and ideally map their location.
+
+Automated classification allows for hobbyists to easily retrieve information on the bird species being heard. Additionally, automated recordings can be mined to determine species and bird populations.
 
 ## Table of Contents
 
@@ -17,12 +22,6 @@ Download mp3 urls into master audio store
 Process audio with selected features to output a sonogram
 Process sonogram with CNN to classify bird song or calls
 
-## Data
-- 40 classes of bird species.
-- 33,567 seperate audio files.
-- 85G of audio data.
-- Used 70/30% split for 40 classes and 22K samples in train set.
-- 13K sample validation set.
 
 
 ## Data Sources
@@ -37,8 +36,13 @@ Process sonogram with CNN to classify bird song or calls
 white paper:
 https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43905.pdf
 
-## Data Used
-TODO
+## Data
+- 40 classes of bird species.
+- 33,567 seperate audio files.
+- 85G of audio data.
+- Used 70/30% split for 40 classes and 22K samples in train set.
+- 13K sample validation set.
+
 
 ## Features
 Features existing or synthesized for modeling.
