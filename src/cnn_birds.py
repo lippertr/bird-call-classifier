@@ -26,6 +26,7 @@ class model_sonograms():
         self.X_train_gen = None
         self._t_stamp = self._get_time_str()
         self.model = None
+
         return
 
     def load_samples(self, rescale=1./255):
@@ -124,7 +125,40 @@ class model_sonograms():
         self.model.add(Dense(self.X_test_gen.num_class)) #could also use X_test_gen num_classes are equal
         self.model.add(Activation('softmax'))
 
+        self.model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
         return self.model
+
+    def fit(self, steps_per_epoch=5, epochs=20):
+        """
+        Uses the fit_generator method to fit the model to the loaded input images
+        """
+        self.model.fit_generator(
+            self.X_train_gen,
+            verbose=1,
+            steps_per_epoch=steps_per_epoch, #300 should typically be equal to the number of unique samples of your dataset divided by the batch size
+            epochs=epochs,  #50,
+            callbacks=[tensorbd],
+            validation_data=self.X_test_gen,
+            validation_steps=100) # validation_steps should be equal to
+                                 # the number of unique samples of your
+                                 # VALIDATION dataset divided by the batch size.
+
+        return None
+
+    def save(save_name, weights=True, model=True):
+        #saving weights and model both just to be pedantic
+        weight_file = save_name + t_stamp + '.weights'
+        self.model.save_weights(weight_file)
+
+        model_file = save_name + t_stamp + '_model.hdf5'
+        self.model.save(model_file)
+
+        '''
+        need a load:
+        model.load_weights(filepath, by_name=False)
+        '''
+        return None
 
     def _get_time_str(self):
         """
@@ -154,38 +188,13 @@ if __name__ == '__main__':
     bird_model.make_model()
 
     #use tensorboard to see output and tweak
-    data_run_name = 'imgdata_33k_big2dcnn_stft'+ bird_model._t_stamp
-    tensorbd = TensorBoard('logs/' + data_run_name)
+    save_name_prefix = 'imgdata_33k_big2dcnn_stft'
+    tensorbd = TensorBoard('logs/' + save_name_prefix)
+
     bird_model.make_model()
-    bird_model.model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    bird_model.fit(epochs=1) #refactor code testing replace with appropriate num later
 
-    bird_model.model.fit_generator(
-        bird_model.X_train_gen,
-        verbose=1,
-        steps_per_epoch=15, #300 should typically be equal to the number of unique samples of your dataset divided by the batch size
-        epochs=6,  #50,
-        callbacks=[tensorbd],
-        validation_data=bird_model.X_test_gen,
-        validation_steps=100) # validation_steps should be equal to
-                             # the number of unique samples of your
-                             # VALIDATION dataset divided by the batch size.
-
-    #saving weights and model both just to be pedantic
-    weight_file = data_run_name + t_stamp + '.weights'
-    bird_model.model.save_weights(weight_file)
-
-    model_file = data_run_name + t_stamp + '_model.hdf5'
-    model.save(model_file)
-
-    '''
-    FYI:
-    model.save_weights(filepath): saves the weights of the model as a HDF5 file.
-    model.load_weights(filepath, by_name=False): loads the weights of the model
-    from a HDF5 file (created by  save_weights). By default, the architecture is
-    expected to be unchanged. To load weights into a different
-    architecture (with some layers in common), use by_name=True to load only
-    those layers with the same name.
-    '''
+    bird_model.save(save_name_prefix, weights=True, hdf5=True)
 
     #make predictions
     # for all of validation set
