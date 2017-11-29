@@ -45,7 +45,7 @@ def bird_model(num_classes):
         model.add(MaxPooling2D(pool_size=(2, 2)))
         model.add(BatchNormalization())
         model.add(Dropout(0.25))
-        
+
         model.add(Conv2D(128, kernel_size=(3, 3)))
         model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
         model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -71,7 +71,26 @@ def bird_model(num_classes):
 
         return model
 
+def get_time_str():
+    """
+    Utility function to return timestamp string to append to log and
+    weight output files
+    """
+    from datetime import datetime
+    t_stamp = datetime.now()
+    t_stamp = str(t_stamp)
+    t_stamp = t_stamp.replace('-','')
+    t_stamp = t_stamp.replace(' ', '')
+    t_stamp = t_stamp.replace(':', '')
+
+    #don't need fractional seconds for this
+    return t_stamp.split('.')[0]
+
+
 if __name__ == '__main__':
+
+    img_input_path = '../data/xeno-canto/img_data/'
+
 
     '''
     creat function to read all the files from the input directory
@@ -82,12 +101,12 @@ if __name__ == '__main__':
     #get input genorator to images
     train_datagen = ImageDataGenerator(rescale=1./255)
     train_validation_datagen = ImageDataGenerator(rescale=1./255)
-    X_train_gen = train_datagen.flow_from_directory('img_data/train',
+    X_train_gen = train_datagen.flow_from_directory(img_input_path + 'train/',
                     class_mode='categorical',
                     target_size=(xpixels,ypixels),
                     color_mode='grayscale',
                     shuffle=True)
-    X_test_gen = train_validation_datagen.flow_from_directory('img_data/validation/',
+    X_test_gen = train_validation_datagen.flow_from_directory(img_input_path + 'validation/',
                     class_mode='categorical',
                     target_size=(xpixels,ypixels),
                     color_mode='grayscale',
@@ -95,15 +114,7 @@ if __name__ == '__main__':
 
     model = bird_model(X_train_gen.num_class)
 
-    #make timestamp extention to save model weights and config
-    from datetime import datetime
-    t_stamp = datetime.now()
-    t_stamp = str(t_stamp)
-    t_stamp = t_stamp.replace('-','')
-    t_stamp = t_stamp.replace(' ', '')
-    t_stamp = t_stamp.replace(':', '')
-    #don't need fractional seconds for this
-    t_stamp = t_stamp.split('.')[0]
+    t_stamp = get_time_str()
 
     #use tensorboard to see output and tweak
     data_run_name = 'imgdata_33k_big2dcnn_stft'+t_stamp
@@ -114,23 +125,13 @@ if __name__ == '__main__':
     model.fit_generator(
         X_train_gen,
         verbose=1,
-        steps_per_epoch=300, #300 should typically be equal to the number of unique samples of your dataset divided by the batch size
-        epochs=60,  #50,
+        steps_per_epoch=15, #300 should typically be equal to the number of unique samples of your dataset divided by the batch size
+        epochs=6,  #50,
         callbacks=[tensorbd],
         validation_data=X_test_gen,
         validation_steps=100) # validation_steps should be equal to
                              # the number of unique samples of your
                              # VALIDATION dataset divided by the batch size.
-
-    #make timestamp extention to save model weights and config
-    from datetime import datetime
-    t_stamp = datetime.now()
-    t_stamp = str(t_stamp)
-    t_stamp = t_stamp.replace('-','')
-    t_stamp = t_stamp.replace(' ', '')
-    t_stamp = t_stamp.replace(':', '')
-    #don't need fractional seconds for this
-    t_stamp = t_stamp.split('.')[0]
 
     #saving weights and model both just to be pedantic
     weight_file = data_run_name + t_stamp + '.weights'
