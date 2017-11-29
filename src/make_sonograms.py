@@ -163,6 +163,23 @@ def make_sonograms(X,y,t_or_v):
         plt.savefig(img_filename)
     return None
 
+def first_stab():
+    '''
+    code for class or function to create the image from first 30 seconds of mp3
+    '''
+    y, sr = librosa.load(mp3_path + filename, duration=30, sr=22050) #load only 30 seconds
+
+    #S = librosa.stft(y)
+    M = librosa.feature.melspectrogram(y=y, sr=sr,n_fft=4096, hop_length=1024,n_mels=128,fmax=11025)
+    plt.clf()
+    plt.figure(figsize=(1,1), dpi=138)
+    plt.subplot(1,1,1)
+    librosa.display.specshow(librosa.logamplitude(M,ref_power=np.max),sr=sr, hop_length=1024,\
+                             fmax=11025,cmap='gray')
+
+    plt.savefig(img_path + img_filename)
+    return
+
 if __name__ == '__main__':
 
     args = sys.argv[1:]
