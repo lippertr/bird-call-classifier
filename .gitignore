@@ -1,7 +1,5 @@
 *.png
 *.mp3
-audio_analyzer/
-librosa/
 presentation/
 .ipynb_checkpoints/
 =======
