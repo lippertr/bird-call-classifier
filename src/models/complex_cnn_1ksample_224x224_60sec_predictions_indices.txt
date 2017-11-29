@@ -1,0 +1,1 @@
+{'bewicks-wren-thryomanes-bewickii': 0, 'european-greenfinch-chloris-chloris': 1, 'fox-sparrow-passerella-iliaca': 2, 'swainsons-thrush-catharus-ustulatus': 3, 'tree-pipit-anthus-trivialis': 4}
