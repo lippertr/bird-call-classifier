@@ -16,7 +16,7 @@ class sound_features():
     def __init__(self):
         return
 
-    def make_sonograms(self):
+    def make_spectrogram(self):
         return
 
     def read_meta(self):
@@ -37,7 +37,7 @@ create % train test split
 process features as decided
 output images to directories for imagedatagenerator to use
 """
-def make_sonograms_from_master(X,y,t_or_v, number=50):
+def make_spectrograms_from_master(X,y,t_or_v, number=50):
     #source_dir = '/home/ubuntu/s3_data/'
     source_dir = 'data/'
 
@@ -120,7 +120,7 @@ def make_sonograms_from_master(X,y,t_or_v, number=50):
     return None
 
 
-def make_sonograms(X,y,t_or_v):
+def make_spectrograms(X,y,t_or_v):
 
     # df_db = pd.read_csv('song_data.csv')
     # onlyfiles = [f for f in listdir('data/') if isfile(join('data/', f))]
@@ -192,7 +192,7 @@ if __name__ == '__main__':
         done: 1.read in sample list
         done: 2. shuffle it up
         3. process file as I want with librosa
-        4. write sonogram for that file in proper train/validate label directory
+        4. write spectrogram for that file in proper train/validate label directory
         5. ready to train and test a model
     '''
     #get files from master audio directory for entire dataset testing
@@ -233,8 +233,8 @@ if __name__ == '__main__':
         df_test.columns = ['x_value']
         df_test['label'] = y_test
         df_test.to_csv('1test_data.csv')
-        make_sonograms_from_master(X,y,'train')
-        make_sonograms_from_master(X_test,y_test,'validation')
+        make_spectrogram(X,y,'train')
+        make_spectrogram_from_master(X_test,y_test,'validation')
 
     else:
         in_file = args[0]
@@ -255,18 +255,18 @@ if __name__ == '__main__':
         y = df_in['label'].tolist()
 
         if type_data == 'train':
-            make_sonograms_from_master(X,y,'train')
+            make_spectrogram_from_master(X,y,'train')
         elif type_data == 'test':
-            make_sonograms_from_master(X,y,'validation')
+            make_spectrogram_from_master(X,y,'validation')
         else:
             print('input file error: {}'.format(in_file))
 
     #need to loop through files
-    # make_sonograms_from_master(X,y,'train')
-    # make_sonograms_from_master(X_test,y_test,'validation')
+    # make_spectrogram_from_master(X,y,'train')
+    # make_spectrogram_from_master(X_test,y_test,'validation')
 
-    # make_sonograms(X,y,'train')
-    # make_sonograms(X_test, y_test, 'validation')
+    # make_spectrogram(X,y,'train')
+    # make_spectrogram(X_test, y_test, 'validation')
 
     # for filename in input_mp3_files:
     #
