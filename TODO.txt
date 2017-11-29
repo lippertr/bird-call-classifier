@@ -1,0 +1,42 @@
+TODO
+
+make spectrogram of good sound 
+    make second spectrogram same species
+    align them if possible
+    run through keras tenserflow sequential
+
+get spectrogram with:
+    -get pyAudio working in 3 
+    -using pyAudioAnalysis get a baseline with the latent fetures it provides
+    or
+    -yaafe
+
+-find master list of songs from git
+    seperate data into buckets by species (I failed to do that when It would have been easier)
+-preprocess audio with filters for species high-pass for tweety birds / low pass for owls
+
+blockers: (potential) may have to change mp3 to wav -- time or subset selection
+
+extra:
+read Jake's cnn refered document
+video safari tensor flow 
+
+-----------Thursday--------------------
+Chockablocked EC2 and recovered
+pain to recover but no data loss
+ec2 to s3 not as fast as I would like
+
+Finished scraping : 31,7621 files
+                    76 G mp3 files all labeled data
+                    all files in s3 bucket and on laptop currently
+pyAudioAnalysis fixed a bit for python3 -- not well documented or I need to read it and follow links
+reviewed ML architecture of using Keras and TensorFlow
+----------------------------------
+-----------Wed--------------------
+DONE made list for western americas but harder to scrape so leaving til later
+----------------------------------
+-----------Tues--------------------
+DONE add reference papers and sites
+DONE data sites
+DONE make repos public and send out
+----------------------------------
