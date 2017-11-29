@@ -1,5 +1,11 @@
+*.png
 *.mp3
-TODO.txt
+audio_analyzer/
+librosa/
+presentation/
+.ipynb_checkpoints/
+=======
+*~
+*.pyc
+*.npy
 *.swp
-*.swo
-data/*
