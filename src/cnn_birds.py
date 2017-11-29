@@ -14,6 +14,10 @@ from keras.callbacks import TensorBoard
 from keras.layers import PReLU
 from keras import regularizers
 
+"""
+The model class for a convelutional neural network using keras
+"""
+
 xpixels = 138
 ypixels = 138
 
@@ -21,8 +25,11 @@ def bird_model(num_classes):
 
 
         model = Sequential()
+        #input layer
         model.add(Conv2D(32, kernel_size=(3, 3), input_shape=(xpixels, ypixels, 1)))
         model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
+
+        #hidden layers
         model.add(Conv2D(64, kernel_size=(3, 3)))
         model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
         model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -38,9 +45,7 @@ def bird_model(num_classes):
         model.add(MaxPooling2D(pool_size=(2, 2)))
         model.add(BatchNormalization())
         model.add(Dropout(0.25))
-        ####
-        # adding layers
-        ####
+        
         model.add(Conv2D(128, kernel_size=(3, 3)))
         model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
         model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -52,21 +57,6 @@ def bird_model(num_classes):
         model.add(MaxPooling2D(pool_size=(2, 2)))
         model.add(BatchNormalization())
         model.add(Dropout(0.25))
-
-#         model.add(Conv2D(128, kernel_size=(3, 3)))
-#         model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
-#         model.add(MaxPooling2D(pool_size=(2, 2)))
-#         model.add(BatchNormalization())
-#         model.add(Dropout(0.25))
-#
-#         model.add(Conv2D(128, kernel_size=(3, 3)))
-#         model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
-#         model.add(MaxPooling2D(pool_size=(2, 2)))
-#         model.add(BatchNormalization())
-#         model.add(Dropout(0.25))
-#         #######
-        # end added layers
-        #######
 
         #MLP
         model.add(Flatten())
@@ -74,64 +64,10 @@ def bird_model(num_classes):
         model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
         model.add(Dropout(0.5))
 
-        ##### added flat layers
-#         model.add(Dense(128))
-#         model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
-#         model.add(Dropout(0.5))
-#         model.add(Dense(128))
-#         model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
-#         model.add(Dropout(0.5))
-#         model.add(Dense(128))
-#         model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
-#         model.add(Dropout(0.5))
-#         #### end flat layer additions
-
+        #output layer
         model.add(Dense(num_classes))
         model.add(Activation('softmax'))
 
-        #complex cnn
-        '''
-        model = Sequential()
-        model.add(Conv2D(96, kernel_size=(3, 3), activation=my_prelu(), input_shape=(xpixels, ypixels, 1)))
-        model.add(Conv2D(256, kernel_size=(3, 3), activation=my_prelu()))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(BatchNormalization())
-        model.add(Dropout(0.25))
-
-        model.add(Conv2D(384, kernel_size=(3, 3), activation=my_prelu()))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(BatchNormalization())
-        model.add(Dropout(0.25))
-
-        model.add(Conv2D(384, kernel_size=(3, 3), activation=my_prelu()))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(BatchNormalization())
-        model.add(Dropout(0.25))
-        model.add(Conv2D(1024, kernel_size=(3, 3), activation=my_prelu()))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(BatchNormalization())
-        model.add(Dropout(0.25))
-        model.add(Conv2D(1024, kernel_size=(3, 3), activation=my_prelu()))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(BatchNormalization())
-        model.add(Dropout(0.25))
-        model.add(Conv2D(1024, kernel_size=(3, 3), activation=my_prelu()))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(BatchNormalization())
-        model.add(Dropout(0.25))
-
-        model.add(Flatten())
-        # model.add(Dense(128, activation='relu'))
-        model.add(Dense(2048, activation=my_prelu()))
-        model.add(Dense(2048, activation=my_prelu()))
-
-        # model.add(BatchNormalization())
-        model.add(Dropout(0.5))
-
-        model.add(Dense(num_classes, activation='softmax'))
-
-        return model
-        '''
 
         return model
 

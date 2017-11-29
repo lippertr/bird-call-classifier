@@ -3,6 +3,16 @@
 import re, sys
 import pandas as pd
 
+"""
+Read in the raw html info that was scraped in order to create a data set of
+labels as well as urls where the mp3 are located.
+
+This output data store will be referenced for all file names in the audio data dir
+as well as when creating images of sonagrams
+
+It will be the master data store of meta data allowing the creation of mp3 data again
+if desired or expanded in future with additional classes of birds.
+"""
 
 
 if __name__ == '__main__':

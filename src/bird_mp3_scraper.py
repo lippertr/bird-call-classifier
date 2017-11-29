@@ -63,22 +63,6 @@ class bird_scraper():
             url_values['num_pages'] = row.num_pages
             species_pages[row.common_name] = url_values
 
-        #test if this is correct before hitting web
-        # for k,v in species_pages.items():
-        #     print('{}: {} with max page:{}'.format(k,v['top_url'],v[num_pages]))
-
-        # #get data from max pages per species
-        # for k,v in species_pages.items():
-        #     top_species_page = v['top_url']
-            # r = requests.get(v['top_url'])
-            # data = r.text
-            # soup = BeautifulSoup(data, 'lxml')
-
-        #r = requests.get('http://www.xeno-canto.org/species/')
-        # r.text
-        # data = r.text
-        # data
-        # soup = BeautifulSoup(data)
         return species_pages
 
 
@@ -143,11 +127,12 @@ class bird_scraper():
 
         return None
 if __name__ == '__main__':
+
+    scraper = bird_scraper()
+
     #get_sound_urls()
     # main_urls = defaultdict()
     # main_urls = get_sound_urls()
     # get_song_source(main_urls)
 
     # get_song_mp3s()  #used this line validation_steps
-
-    scraper = bird_scraper()
