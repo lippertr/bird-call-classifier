@@ -1,0 +1,39 @@
+American Robin,Turdus migratorius,425,1667,15
+Barn Swallow,Hirundo rustica,818,560,28
+Bewick's Wren,Thryomanes bewickii,500,580,17
+Black-headed Gull,Chroicocephalus ridibundus,448,976,15
+Blackish Tapaculo,Scytalopus latrans,409,97,14
+Bluethroat,Luscinia svecica,417,105,14
+Brown-crested Flycatcher,Myiarchus tyrannulus,402,665,14
+Common Blackbird,Turdus merula,2426,7334,81
+Common Cuckoo,Cuculus canorus,473,1209,16
+Common Reed Bunting,Emberiza schoeniclus,514,498,18
+Common Starling,Sturnus vulgaris,536,956,18
+Eurasian Bullfinch,Pyrrhula pyrrhula,598,410,20
+Eurasian Skylark,Alauda arvensis,809,2522,27
+Eurasian Tree Sparrow,Passer montanus,1111,1285,38
+European Goldfinch,Carduelis carduelis,668,1242,23
+European Greenfinch,Chloris chloris,777,1634,26
+Fieldfare,Turdus pilaris,484,628,17
+Fox Sparrow,Passerella iliaca,464,134,16
+Great Spotted Woodpecker,Dendrocopos major,978,1275,33
+Grey-breasted Wood Wren,Henicorhina leucophrys,728,464,25
+House Sparrow,Passer domesticus,964,2175,33
+House Wren,Troglodytes aedon,1068,1762,36
+Lesser Whitethroat,Sylvia curruca,691,217,24
+Northern Raven,Corvus corax,774,726,26
+Red Crossbill,Loxia curvirostra,1510,498,51
+Red-winged Blackbird,Agelaius phoeniceus,497,1981,17
+Redwing,Turdus iliacus,421,527,15
+Rufous-browed Peppershrike,Cyclarhis gujanensis,552,923,19
+Rufous-collared Sparrow,Zonotrichia capensis,537,946,18
+Sedge Warbler,Acrocephalus schoenobaenus,514,426,18
+Song Sparrow,Melospiza melodia,613,1229,21
+Song Thrush,Turdus philomelos,1580,3454,53
+Spotted Towhee,Pipilo maculatus,501,633,17
+Swainson's Thrush,Catharus ustulatus,429,545,15
+Tree Pipit,Anthus trivialis,502,363,17
+White Wagtail,Motacilla alba,472,470,16
+Willow Warbler,Phylloscopus trochilus,1625,1716,55
+Wood Warbler,Phylloscopus sibilatrix,422,201,15
+common_name,scientific_name,num_fg,num_bg,num_pages
