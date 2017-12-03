@@ -13,6 +13,8 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import TensorBoard
 from keras.layers import PReLU
 from keras import regularizers
+from keras.preprocessing import image
+import numpy as np
 
 """
 The model class for a convelutional neural network using keras
@@ -86,33 +88,38 @@ class model_sonograms():
         self.model.add(Conv2D(32, kernel_size=(3, 3), input_shape=(self.xpixels, self.ypixels, 1)))
         self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
 
-        #hidden layers
+        #layers
         self.model.add(Conv2D(64, kernel_size=(3, 3)))
         self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
+        # self.model.add(Dropout(0.25))
+        self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
+
+
+        self.model.add(Conv2D(128, kernel_size=(3, 3)))
+        self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
+        self.model.add(MaxPooling2D(pool_size=(2, 2)))
+        self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
         self.model.add(Dropout(0.25))
 
         self.model.add(Conv2D(128, kernel_size=(3, 3)))
         self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
+        self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
+        # self.model.add(BatchNormalization())
         self.model.add(Dropout(0.25))
 
         self.model.add(Conv2D(128, kernel_size=(3, 3)))
+        # self.model.add(BatchNormalization())
         self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
+        self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
+        self.model.add(Dropout(0.25))
+
+        self.model.add(Conv2D(128, kernel_size=(3, 3)))
         self.model.add(BatchNormalization())
-        self.model.add(Dropout(0.25))
-
-        self.model.add(Conv2D(128, kernel_size=(3, 3)))
         self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
-        self.model.add(BatchNormalization())
-        self.model.add(Dropout(0.25))
-
-        self.model.add(Conv2D(128, kernel_size=(3, 3)))
-        self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
-        self.model.add(MaxPooling2D(pool_size=(2, 2)))
-        self.model.add(BatchNormalization())
         self.model.add(Dropout(0.25))
 
         #MLP
@@ -120,6 +127,7 @@ class model_sonograms():
         self.model.add(Dense(128))
         self.model.add(PReLU(alpha_regularizer=regularizers.l2(0.01)))
         self.model.add(Dropout(0.5))
+
 
         #output layer
         self.model.add(Dense(self.X_test_gen.num_class)) #could also use X_test_gen num_classes are equal
@@ -140,7 +148,7 @@ class model_sonograms():
             epochs=epochs,  #50,
             callbacks=[tensorbd],
             validation_data=self.X_test_gen,
-            validation_steps=100) # validation_steps should be equal to
+            validation_steps=10) # validation_steps should be equal to
                                  # the number of unique samples of your
                                  # VALIDATION dataset divided by the batch size.
 
@@ -180,7 +188,24 @@ class model_sonograms():
         takes one input image and returns the class label
         """
 
-        return
+        img = image.load_img(image_filename, target_size=(138,138)).convert('L')
+        img = image.img_to_array(img)
+        img = np.expand_dims(img, axis=0)
+        img = img/255
+        p1 = self.model.predict(img).argmax()
+
+        '''
+        predict_generator should work but no one on the planet can seem to get the true labels out so???
+            How is that good?
+        '''
+        #reverse the class dictionary to lookup on assigned index
+        index_lookup = {v: k for k, v in self.X_test_gen.class_indices.items()}
+        # X_pred = self.model.predict_generator(self.X_test_gen, steps=10, verbose=1)
+        # for i in range(X_pred.shape[0]):
+        #     print( index_lookup[X_pred[i].argmax()])
+
+
+        return index_lookup[p1]
 
 
 if __name__ == '__main__':
@@ -191,15 +216,19 @@ if __name__ == '__main__':
     bird_model.make_model()
 
     #use tensorboard to see output and tweak
-    save_name_prefix = 'imgdata_33k_big2dcnn_stft'
+    save_name_prefix = 'imgdata1k_changed_layers1_stft'
     tensorbd = TensorBoard('logs/' + save_name_prefix)
 
     # bird_model.fit(epochs=100)
-    bird_model.fit(steps_per_epoch=2, epochs=1)
+    bird_model.fit(steps_per_epoch=20, epochs=50)
 
     bird_model.save(save_name_prefix, weights=True, hdf5_model=True)
 
     #make predictions
+    #hardcoded for test purposes
+    image_filename = '../data/xeno-canto/img_data/validation/european-greenfinch-chloris-chloris/xc_audio_171039_120.png'
+    predict_class = bird_model.predict_item(image_filename)
+
     # for all of validation set
     # for a one off entered in to show misclassification
 
