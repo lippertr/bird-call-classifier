@@ -14,7 +14,7 @@ Automated classification allows for hobbyists to easily retrieve information on 
 - [Features](#features)
 - [Convolutional Neural Network](#convolutional-neural-network)
 - [Final Model Architectue](#final-model-architecture)
-- [Results](#(results)
+- [Results](#results)
 - [Future Plans](#future-plans)
 - [Acknowledgements](#acknowledgements)
 
