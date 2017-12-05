@@ -1,16 +1,15 @@
-** This is a work in progress for a class **
-
 # Bird Classifier by Call or Song
 
 It's widely agreed there are between 9,000-10,000 bird species. Some sources double that number (sources).
 
-When outdoors a person is more likely to hear a bird than see it. This results in difficulty identifying bird species in rural and urban centers alike. If the sound can be used to classify a bird species, researchers to hobbyists can have a better idea of what species are present and ideally map their location.
+When outdoors a birder seems more likely to hear a bird than see it. This results in difficulty identifying bird species in rural and urban centers alike since we visual location can be difficult at times. However, by using a bird's call or song we can identify the species and decide if we wish pursue visual identification. If the sound can be used to classify a bird species, researchers and amateur birders alike can have a better idea of what species are present and ideally map their location.
 
-Automated classification allows for hobbyists to easily retrieve information on the bird species being heard. Additionally, automated recordings can be mined to determine species and bird populations.
+Automated classification allows for hobbyists to easily retrieve information on the bird species heard. Additionally, automated recordings could be stored and compared to future sound events determining if species depopulation has occurred.
 
 ## Table of Contents
 
-[Schedule](#schedule)
+- [Future Plans](#future-plans)
+- [Acknowledgements](#acknowledgements)
 
 
 ## Overview Pipeline
@@ -62,18 +61,9 @@ The good stuff on how this problem was solved using the CNN
 
 What I found
 
-## Future
+## Future Plans
 
-What I would do if I had more time
-
-## Schedule
-
-- [x] Move code to meaningful filename
-- [x] Create utility class for extra helper functions
-- [ ] Update Readme.md
-- [ ] Place sample data into data/ image_data/ html/ directories
-- [ ] Create Presentation
-
+A website and a smartphone app would be ideal since this would give a wide range of access to the data and provide a means to increase the data samples per species.
 
 ## Acknowledgements
 TBD
