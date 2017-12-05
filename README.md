@@ -19,55 +19,107 @@ Automated classification allows for hobbyists to easily retrieve information on 
 - [Acknowledgements](#acknowledgements)
 
 
-## Overview Data Flow
-Data gathered from xeno-centro website.
-40 top species determined with landingpages for obtaining mp3 urls
-Mp3s scraped and stored on AWS S3
-Librosa used to transform the sound into a spectrogram.
-Process sonogram with CNN to classify bird song or calls.
+## Overview Process Flow
+The data was gathered from the [xeno-centro](http://www.xeno-canto.org/) website.<br>
+40 top species determined and their landing pages scraped for obtaining mp3 urls.<br>
+Mp3s audio scraped and stored on AWS S3<br>
+[Librosa](https://librosa.github.io/librosa/index.html) used to transform the sound into a spectrogram.<br>
+Processed spectrogram with CNN using [Keras](https://keras.io/) to classify bird song or calls.
 
 ## Data Sources
 - http://www.xeno-canto.org/
-- https://www.mbr-pwrc.usgs.gov/id/calllist.html
-- https://nationalzoo.si.edu/scbi/migratorybirds/education/nasongkey.pl
-- https://www.bird-sounds.net/
-- http://www.birds.cornell.edu/Page.aspx%3Fpid%3D1059
-- http://ebird.org/content/ebird/
-- https://secure.birds.cornell.edu/cassso/login?service=https%3A%2F%2Fmacaulaylibrary.org%2Fauth%2Fclo%2Fcallback%3Furl%3Dhttps%253A%252F%252Fmacaulaylibrary.org%252Fsignin
-
-white paper:
-https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43905.pdf
 
 ## Data
 - 40 classes of bird species.
-- 33,567 seperate audio files.
+- 33,567 separate audio files.
 - 85G of audio data.
-- Used 60/40% split for 40 classes and 20K samples in train set.
-- 13K sample validation set.
-
+- Used 60/40% split data, all input images were 138 x 138 x 1 pixels
+  - 20,156 training samples
+  - 13,438 validation samples
 
 ## Features
-Features used in final model were STFT.
+A challenge with using sound is taking the input to a CNN is an image.
+
+Visualizing sound can be done with a spectrogram. It's a 2 dimensional representation of sound. The horizontal axis is time, vertical axis is frequency (Hx) or pitch if you prefer. The darkness of a spot is the loudness of the sound in decibels.
+
+Here is an example:<br>
+![swainsons thrush](images/swainsons-thrush-spectrogram.png)
+
+Once spectrograms are the choice of input, deciding what features from the audio will be extracted and placed into the spectrogram was my next step.
+
+After investigating several libraries to assist in audio feature sampling and extraction, I decided to use [librosa](https://librosa.github.io/librosa/index.html). It's well documented and is written in python so it works well with my project. The drawback was processing speed. It is slower than some of the other libraries out there due to it's entirely python architecture.
+
+Now feature choices, I could take the low or percussive sounds, the high frequency spectrums, the  Mel-frequency cepstrum, or STSF.
+
+STSF ([Short-time Fourier transform](https://en.wikipedia.org/wiki/Short-time_Fourier_transform)) was chosen because it yielded the best results on a well balanced test/validation set of around 1,000 samples in 5 classes. Accuracy of this baseline was 38%.
 
 ## Convolutional Neural Network
 
-A muli layer CNN with PReLU activation and 1 Dense layer with 1 output sigmoid layer. Input was 138x138x1 grayscal spectrogram.
+A multi layer CNN with PReLU activation and 1 Dense layer with 1 output sigmoid layer.<br>
+Input was 138x138x1 grayscale spectrogram.
 
 ## Problems (maybe as separate or grouped topics)
 Challenges faced and solutions used
 
 ## Final Model Architecture
 
-Final model was a CNN implemented with Keras
+Final model was a CNN implemented with Keras arrived at after testing various  architectures and activation layers. The final activation leading to best results was PReLU. The overall keras CNN model summary is as follows:
+
+|Layer (type)          |       Output Shape          | Param #|
+|--------------------| :-----------------------------|:------|
+|conv2d_1 (Conv2D)    |        (None, 136, 136, 32) |     320 |
+|p_re_lu_1 (PReLU)     |       (None, 136, 136, 32)  |    591872
+|conv2d_2 (Conv2D)     |       (None, 134, 134, 64)  |    18496
+|p_re_lu_2 (PReLU)     |       (None, 134, 134, 64)  |    1149184
+|max_pooling2d_1 (MaxPooling2) |(None, 67, 67, 64)   |     0
+|p_re_lu_3 (PReLU)      |      (None, 67, 67, 64)    |    287296
+|conv2d_3 (Conv2D)      |      (None, 65, 65, 128)   |    73856
+|p_re_lu_4 (PReLU)      |      (None, 65, 65, 128)   |    540800
+|max_pooling2d_2 (MaxPooling2)| (None, 32, 32, 128)  |     0
+|p_re_lu_5 (PReLU)            |(None, 32, 32, 128)   |    131072
+|dropout_1 (Dropout)          |(None, 32, 32, 128)   |    0
+|conv2d_4 (Conv2D)            |(None, 30, 30, 128)   |    147584
+|p_re_lu_6 (PReLU)            |(None, 30, 30, 128)   |    115200
+|max_pooling2d_3 (MaxPooling2 |(None, 15, 15, 128)   |    0
+|p_re_lu_7 (PReLU)            |(None, 15, 15, 128)    |   28800
+|dropout_2 (Dropout)          |(None, 15, 15, 128)   |    0
+|conv2d_5 (Conv2D)            |(None, 13, 13, 128)   |    147584
+|p_re_lu_8 (PReLU)            |(None, 13, 13, 128)   |    21632
+|max_pooling2d_4 (MaxPooling2 |(None, 6, 6, 128)     |    0
+|p_re_lu_9 (PReLU)            |(None, 6, 6, 128)     |    4608
+|dropout_3 (Dropout)          |(None, 6, 6, 128)     |    0
+|conv2d_6 (Conv2D)            |(None, 4, 4, 128)     |    147584
+|batch_normalization_1 (Batch |(None, 4, 4, 128)     |    512
+|p_re_lu_10 (PReLU)           |(None, 4, 4, 128)      |   2048
+|max_pooling2d_5 (MaxPooling2 |(None, 2, 2, 128)     |    0
+|dropout_4 (Dropout)          |(None, 2, 2, 128)     |    0
+|flatten_1 (Flatten)          |(None, 512)           |    0
+|dense_1 (Dense)              |(None, 128)           |    65664
+|p_re_lu_11 (PReLU)           |(None, 128)           |    128
+|dropout_5 (Dropout)          |(None, 128)           |    0
+|dense_2 (Dense)              |(None, 40)            |    5160
+|activation_1 (Activation)    |(None, 40)            |    0
+
+|                   |                |
+|:-------------------|---------------:|
+|Total params:| 3,479,400|
+|Trainable params:|3,479,144|
+|Non-trainable params: |256|
 
 ## Results
 
-Using a sample set of 33,567 split 60/40 to give test set: 20K, validation set: 13K
-Accuracy: 63.5%
+Using a sample set of 33,567
+- 60/40% split of data, all input images were 138 x 138 x 1 pixels
+  - 20,156 training samples
+  - 13,438 validation samples
+  
+**Accuracy: 63.5%**
 
 ## Future Plans
 
-A website and a smartphone app would be ideal since this would give a wide range of access to the data and provide a means to increase the data samples per species.
+* A website
+* Smartphone app
+* Free access to use and upload data adding to data store
 
 ## Acknowledgements
 1. https://www.safaribooksonline.com/library/view/hands-on-machine-learning/9781491962282/ch11.html -- prelu diagram
