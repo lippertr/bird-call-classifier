@@ -8,20 +8,23 @@ Automated classification allows for hobbyists to easily retrieve information on 
 
 ## Table of Contents
 
+- [Overview Pipeline](#overview-data-flow)
+- [Data Sources](#data-sources)
+- [Data](#data)
+- [Features](#features)
+- [Convolutional Neural Network](#convolutional-neural-network)
+- [Final Model Architectue](#final-model-architecture)
+- [Results](#(results)
 - [Future Plans](#future-plans)
 - [Acknowledgements](#acknowledgements)
 
 
-## Overview Pipeline
-Data in cloud
-Gather html data for bird species
-Scrape for species pages
-Access species pages and scrape for mp3 urls
-Download mp3 urls into master audio store
-Process audio with selected features to output a sonogram
-Process sonogram with CNN to classify bird song or calls
-
-
+## Overview Data Flow
+Data gathered from xeno-centro website.
+40 top species determined with landingpages for obtaining mp3 urls
+Mp3s scraped and stored on AWS S3
+Librosa used to transform the sound into a spectrogram.
+Process sonogram with CNN to classify bird song or calls.
 
 ## Data Sources
 - http://www.xeno-canto.org/
@@ -36,37 +39,49 @@ white paper:
 https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43905.pdf
 
 ## Data
-- 40 classes of bird species. :bird:
+- 40 classes of bird species.
 - 33,567 seperate audio files.
 - 85G of audio data.
-- Used 70/30% split for 40 classes and 22K samples in train set.
+- Used 60/40% split for 40 classes and 20K samples in train set.
 - 13K sample validation set.
 
 
 ## Features
-Features existing or synthesized for modeling.
+Features used in final model were STFT.
 
 ## Convolutional Neural Network
 
-Describe the model
+A muli layer CNN with PReLU activation and 1 Dense layer with 1 output sigmoid layer. Input was 138x138x1 grayscal spectrogram.
 
-## Problems (maybe as seperate or grouped topics)
-Challanges faced and solutions used
+## Problems (maybe as separate or grouped topics)
+Challenges faced and solutions used
 
 ## Final Model Architecture
 
-The good stuff on how this problem was solved using the CNN
+Final model was a CNN implemented with Keras
 
 ## Results
 
-What I found
+Using a sample set of 33,567 split 60/40 to give test set: 20K, validation set: 13K
+Accuracy: 63.5%
 
 ## Future Plans
 
 A website and a smartphone app would be ideal since this would give a wide range of access to the data and provide a means to increase the data samples per species.
 
 ## Acknowledgements
-TBD
-
-## License
-TBD
+1. https://www.safaribooksonline.com/library/view/hands-on-machine-learning/9781491962282/ch11.html -- prelu diagram
+2. https://www.allaboutbirds.org/guide/Barn_Swallow/id
+3. https://eastsideaudubon.org/corvid-crier-stories-2014-12/bird-of-the-month-red-crossbill-loxia-curvirostra
+4. https://www.amnh.org/about-the-museum/press-center/new-study-doubles-the-estimate-of-bird-species-in-the-world
+5. http://kentorchards.org.uk/?wildlife=greater-spotted-woodpecker
+6. https://www.allaboutbirds.org/guide/PHOTO/LARGE/fox_sparrow_garytyson.jpg
+7. http://cdn.audubon.org/cdn/farfuture/lXuJTdJNEgTYmGhH73SLss1cbfWAN5A-h3XPET8YOzY/mtime:1422549944/sites/default/files/House_Sparrow_s52-12-123_l_1.jpg
+8. https://www.allaboutbirds.org/guide/PHOTO/LARGE/barn_swallow_1.jpg
+9. https://www.youtube.com/watch?v=PmMYVeE9QJw
+10. https://www.youtube.com/watch?v=m1k3N0VaqGc
+11. http://www.audubon.org/field-guide/bird/great-horned-owl
+12. Presentation template by SlidesCarnival
+13. http://www.singing-wings-aviary.com/wp-content/uploads/2015/02/European-Goldfinch-Photos.jpg
+13. http://orientalbirdimages.org/images/data/lesser_whitethroat__0002562lr.jpg
+15. http://www.whenlifeisgood.com/birding-by-ear-how-to-identify-birds-by-their-sounds/
