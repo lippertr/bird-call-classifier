@@ -1,4 +1,4 @@
-*.png
+data/*/*.png
 *.mp3
 presentation/
 .ipynb_checkpoints/
