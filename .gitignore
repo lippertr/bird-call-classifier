@@ -1,6 +1,7 @@
 data/*/*.png
 *.mp3
-presentation/
+presentation/*.jpg
+presentation/*.pptx
 .ipynb_checkpoints/
 =======
 *~
