@@ -1,4 +1,5 @@
-data/xeno-canto/imgdata33k_stft_138x138.tar.gz
+src/logs/imgdata1k_changed_layers1_stft/*
+data/xeno-canto/*
 data/*/*.png
 *.mp3
 presentation/*.jpg
