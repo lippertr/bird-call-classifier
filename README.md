@@ -75,14 +75,15 @@ I have since redone the model, simplified and runs much faster.  I included regu
 The overall keras CNN model summary is as follows:
 
 ## Results
-With newer faster model:
-With 18 epochs:
-model.evaluate_generator(X_test_gen, steps=40)
-[3.426939141750336, 0.61171875]
+With newer faster model:<br>
+With 18 epochs:<br>
+model.evaluate_generator(X_test_gen, steps=40)<br>
+[3.426939141750336, 0.61171875]<br>
+
 **61%** accuracy in a much faster model
 
 model.summary()
-_________________________________________________________________
+
 Layer (type)                 Output Shape              Param #   
 =================================================================
 conv2d_1 (Conv2D)            (None, 136, 136, 32)      320       
@@ -129,8 +130,8 @@ dense_2 (Dense)              (None, 40)                5160
 _________________________________________________________________
 activation_1 (Activation)    (None, 40)                0         
 =================================================================
-Total params: 4,842,216
-Trainable params: 4,842,216
+Total params: 4,842,216<br>
+Trainable params: 4,842,216<br>
 Non-trainable params: 0
 _________________________
 
