@@ -70,7 +70,7 @@ Now that the project is over and is just mine I wish to redo the preprocessing a
 
 Final model was a CNN implemented with Keras arrived at after testing various  architectures and activation layers. The final activation leading to best results was PReLU.
 
-I have since redone the model, simplified and runs much faster.  I included regularization. This seems to have helped the model a from overfitting. Total number of epochs was also reduced since it trains faster.
+I have since redone the model, simplified and runs much faster.  I included regularization. This helped the model from overfitting resulting in better validation accuracy.  Total number of epochs was also reduced since model trains faster.
 
 The overall keras CNN model summary is as follows:
 
