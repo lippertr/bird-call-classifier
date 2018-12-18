@@ -59,7 +59,12 @@ A multi layer CNN with PReLU activation and 1 Dense layer with 1 output sigmoid 
 Input was 138x138x1 grayscale spectrogram.
 
 ## Problems (maybe as separate or grouped topics)
-Challenges faced and solutions used
+Getting Data. I was able to scrape and then convert mp3 files to spectrograms.
+After a bit of experimenting the STFT was found to give very good results.
+
+Deciding with limited time how to preprocess for the best data to present to the models.
+
+Now that the project is over and is just mine I wish to redo the preprocessing and see if I can get better results. It is my opinion that better results will happen if I change the preprocessing.
 
 ## Final Model Architecture
 
@@ -112,7 +117,7 @@ Using a sample set of 33,567
 - 60/40% split of data, all input images were 138 x 138 x 1 pixels
   - 20,156 training samples
   - 13,438 validation samples
-  
+
 **Accuracy: 63.5%**
 
 ## Future Plans
