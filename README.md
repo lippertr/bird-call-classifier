@@ -66,52 +66,77 @@ Deciding with limited time how to preprocess for the best data to present to the
 
 Now that the project is over and is just mine I wish to redo the preprocessing and see if I can get better results. It is my opinion that better results will happen if I change the preprocessing.
 
-## Final Model Architecture
+## Model Architecture
 
-Final model was a CNN implemented with Keras arrived at after testing various  architectures and activation layers. The final activation leading to best results was PReLU. The overall keras CNN model summary is as follows:
+Final model was a CNN implemented with Keras arrived at after testing various  architectures and activation layers. The final activation leading to best results was PReLU.
 
-|Layer (type)          |       Output Shape          | Param #|
-|--------------------| :-----------------------------|:------|
-|conv2d_1 (Conv2D)    |        (None, 136, 136, 32) |     320 |
-|p_re_lu_1 (PReLU)     |       (None, 136, 136, 32)  |    591872
-|conv2d_2 (Conv2D)     |       (None, 134, 134, 64)  |    18496
-|p_re_lu_2 (PReLU)     |       (None, 134, 134, 64)  |    1149184
-|max_pooling2d_1 (MaxPooling2) |(None, 67, 67, 64)   |     0
-|p_re_lu_3 (PReLU)      |      (None, 67, 67, 64)    |    287296
-|conv2d_3 (Conv2D)      |      (None, 65, 65, 128)   |    73856
-|p_re_lu_4 (PReLU)      |      (None, 65, 65, 128)   |    540800
-|max_pooling2d_2 (MaxPooling2)| (None, 32, 32, 128)  |     0
-|p_re_lu_5 (PReLU)            |(None, 32, 32, 128)   |    131072
-|dropout_1 (Dropout)          |(None, 32, 32, 128)   |    0
-|conv2d_4 (Conv2D)            |(None, 30, 30, 128)   |    147584
-|p_re_lu_6 (PReLU)            |(None, 30, 30, 128)   |    115200
-|max_pooling2d_3 (MaxPooling2 |(None, 15, 15, 128)   |    0
-|p_re_lu_7 (PReLU)            |(None, 15, 15, 128)    |   28800
-|dropout_2 (Dropout)          |(None, 15, 15, 128)   |    0
-|conv2d_5 (Conv2D)            |(None, 13, 13, 128)   |    147584
-|p_re_lu_8 (PReLU)            |(None, 13, 13, 128)   |    21632
-|max_pooling2d_4 (MaxPooling2 |(None, 6, 6, 128)     |    0
-|p_re_lu_9 (PReLU)            |(None, 6, 6, 128)     |    4608
-|dropout_3 (Dropout)          |(None, 6, 6, 128)     |    0
-|conv2d_6 (Conv2D)            |(None, 4, 4, 128)     |    147584
-|batch_normalization_1 (Batch |(None, 4, 4, 128)     |    512
-|p_re_lu_10 (PReLU)           |(None, 4, 4, 128)      |   2048
-|max_pooling2d_5 (MaxPooling2 |(None, 2, 2, 128)     |    0
-|dropout_4 (Dropout)          |(None, 2, 2, 128)     |    0
-|flatten_1 (Flatten)          |(None, 512)           |    0
-|dense_1 (Dense)              |(None, 128)           |    65664
-|p_re_lu_11 (PReLU)           |(None, 128)           |    128
-|dropout_5 (Dropout)          |(None, 128)           |    0
-|dense_2 (Dense)              |(None, 40)            |    5160
-|activation_1 (Activation)    |(None, 40)            |    0
+I have since redone the model, simplified and runs much faster.  I included regularization. This seems to have helped the model a from overfitting. Total number of epochs was also reduced since it trains faster.
 
-|                   |                |
-|:-------------------|---------------:|
-|Total params:| 3,479,400|
-|Trainable params:|3,479,144|
-|Non-trainable params: |256|
+The overall keras CNN model summary is as follows:
 
 ## Results
+With newer faster model:
+
+In [7]: model.summary()
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_1 (Conv2D)            (None, 136, 136, 32)      320       
+_________________________________________________________________
+p_re_lu_1 (PReLU)            (None, 136, 136, 32)      591872    
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 68, 68, 32)        0         
+_________________________________________________________________
+dropout_1 (Dropout)          (None, 68, 68, 32)        0         
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 66, 66, 64)        18496     
+_________________________________________________________________
+p_re_lu_2 (PReLU)            (None, 66, 66, 64)        278784    
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 64, 64, 64)        36928     
+_________________________________________________________________
+p_re_lu_3 (PReLU)            (None, 64, 64, 64)        262144    
+_________________________________________________________________
+max_pooling2d_2 (MaxPooling2 (None, 32, 32, 64)        0         
+_________________________________________________________________
+dropout_2 (Dropout)          (None, 32, 32, 64)        0         
+_________________________________________________________________
+conv2d_4 (Conv2D)            (None, 30, 30, 128)       73856     
+_________________________________________________________________
+p_re_lu_4 (PReLU)            (None, 30, 30, 128)       115200    
+_________________________________________________________________
+conv2d_5 (Conv2D)            (None, 28, 28, 128)       147584    
+_________________________________________________________________
+p_re_lu_5 (PReLU)            (None, 28, 28, 128)       100352    
+_________________________________________________________________
+max_pooling2d_3 (MaxPooling2 (None, 14, 14, 128)       0         
+_________________________________________________________________
+dropout_3 (Dropout)          (None, 14, 14, 128)       0         
+_________________________________________________________________
+flatten_1 (Flatten)          (None, 25088)             0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 128)               3211392   
+_________________________________________________________________
+p_re_lu_6 (PReLU)            (None, 128)               128       
+_________________________________________________________________
+dropout_4 (Dropout)          (None, 128)               0         
+_________________________________________________________________
+dense_2 (Dense)              (None, 40)                5160      
+_________________________________________________________________
+activation_1 (Activation)    (None, 40)                0         
+=================================================================
+Total params: 4,842,216
+Trainable params: 4,842,216
+Non-trainable params: 0
+_________________________
+
+
+With 18 epochs:
+model.evaluate_generator(X_test_gen, steps=40)
+[3.426939141750336, 0.61171875]
+**61%** accuracy in a much faster model
+
+If using bird_model_orig:
 
 Using a sample set of 33,567
 - 60/40% split of data, all input images were 138 x 138 x 1 pixels
