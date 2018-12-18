@@ -76,8 +76,12 @@ The overall keras CNN model summary is as follows:
 
 ## Results
 With newer faster model:
+With 18 epochs:
+model.evaluate_generator(X_test_gen, steps=40)
+[3.426939141750336, 0.61171875]
+**61%** accuracy in a much faster model
 
-In [7]: model.summary()
+model.summary()
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
@@ -130,12 +134,7 @@ Trainable params: 4,842,216
 Non-trainable params: 0
 _________________________
 
-
-With 18 epochs:
-model.evaluate_generator(X_test_gen, steps=40)
-[3.426939141750336, 0.61171875]
-**61%** accuracy in a much faster model
-
+-------
 If using bird_model_orig:
 
 Using a sample set of 33,567
